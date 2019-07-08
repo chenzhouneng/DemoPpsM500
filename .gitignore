@@ -1,0 +1,6 @@
+*.so
+*.o
+*.bin
+arm/
+aarch64/
+
