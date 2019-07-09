@@ -24,8 +24,8 @@ void SetSpeedoAndPower(double nSpeedo, double nPower)
 	//PpsSetValue("/pps/S2", "GAU_N_VehicleSpeed", nSpeedo * 10);
 	//PpsSetValue("/pps/S2", "GAU_N_PowerValue", nPower + 200);
 	if(s_pPpsBridge) {
-		s_pPpsBridge->setNumeric("GAU_N_VehicleSpeed", int(nSpeedo * 10));
-		s_pPpsBridge->setNumeric("GAU_N_PowerValue", nPower + 200);
+		s_pPpsBridge->setNumeric("val1", int(nSpeedo));
+		s_pPpsBridge->setNumeric("val2", nPower);
 		s_pPpsBridge->publish();
 	}
 }
@@ -36,16 +36,11 @@ void Task_PowerAndSpeedo()
 	if(0 == (sSliceCount % (500 / (ProgramEnvVar::m_nMeterSpeed)))) {
 		sSliceCount = 0;
 		if(bForward) {
-			if(sSpeedo >=100) {
-				sSpeedo += ProgramEnvVar::m_nMeterStep * 2;
-				sPower += ProgramEnvVar::m_nMeterStep * 2;
-			}else {
-				sSpeedo += ProgramEnvVar::m_nMeterStep;
-				sPower += ProgramEnvVar::m_nMeterStep;
-			}
-			if((sSpeedo >= 200)) {
-				if(sSpeedo >= 200) {
-					sSpeedo = 200;
+			srand( (int) time( NULL ) * (int) time( NULL ));
+			sSpeedo += (rand() % int(ProgramEnvVar::m_nMeterStep));
+			if((sSpeedo >= 240)) {
+				if(sSpeedo >= 240) {
+					sSpeedo = 240;
 				}
 				if(sPower >= 180) {
 					sPower = 180;
@@ -54,13 +49,8 @@ void Task_PowerAndSpeedo()
 			}
 			SetSpeedoAndPower(sSpeedo,sPower);
 		}else {
-			if(sSpeedo >=100) {
-				sSpeedo -= ProgramEnvVar::m_nMeterStep * 2;
-				sPower -= ProgramEnvVar::m_nMeterStep * 2;
-			}else {
-				sSpeedo -= ProgramEnvVar::m_nMeterStep;
-				sPower -= ProgramEnvVar::m_nMeterStep;
-			}
+			srand( (int) time( NULL ) * (int) time( NULL ));
+			sSpeedo -= (rand() % int(ProgramEnvVar::m_nMeterStep));
 			if((sSpeedo <= 0) ) {
 				if(sSpeedo <= 0) {
 					sSpeedo = 0;

@@ -21,12 +21,12 @@ int main(int argc, char *argv[]) {
 	while(true) {
 		usleep(ProgramEnvVar::m_nTimeSlice  * 1000 - 1000);
 		INESA_TIMING_START();
-		Task_ADAS();
-		Task_Center();
-		Task_ModeSwitch();
+		//Task_ADAS();
+		//Task_Center();
+		//Task_ModeSwitch();
 		Task_PowerAndSpeedo();
-		Task_Telltales();
-		Task_WarningPopup();
+		//Task_Telltales();
+		//Task_WarningPopup();
 		INESA_TIMING_STOP("TASK LOOP USE TIME");
 	}
 
